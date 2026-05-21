@@ -17,6 +17,16 @@ export default function MyEventsPage() {
   const [myCreatedEvents, setMyCreatedEvents] = useState([]);
   const [myRsvps, setMyRsvps] = useState([]);
 
+  // Pagination state — separate tracking per tab
+  const [pageSize] = useState(3);
+  const [createdTotalPages, setCreatedTotalPages] = useState(0);
+  const [createdTotalElements, setCreatedTotalElements] = useState(0);
+
+  const createdPageRef = useRef(0);
+  const [rsvpsTotalPages, setRsvpsTotalPages] = useState(0);
+  const [rsvpTotalElements, setRsvpTotalElements] = useState(0);
+  const rsvpsPageRef = useRef(0);
+
   // Track which tabs have already been fetched to avoid redundant calls
   const hasFetchedCreated = useRef(false);
   const hasFetchedRsvps = useRef(false);
@@ -24,20 +34,30 @@ export default function MyEventsPage() {
   // Lazy fetch: only load data for the active tab (and only once per tab)
   useEffect(() => {
     if (activeTab === "created" && !hasFetchedCreated.current) {
-      fetchCreatedEvents();
+      fetchCreatedEvents(0);
     } else if (activeTab === "rsvps" && !hasFetchedRsvps.current) {
-      fetchRsvps();
+      fetchRsvps(0);
     }
   }, [activeTab]);
 
-  const fetchCreatedEvents = async () => {
+  const fetchCreatedEvents = async (page) => {
     try {
-      setLoading(true);
-      const created = await eventService.getMyCreatedEvents();
+      if (page === 0) setLoading(true);
+      const created = await eventService.getMyCreatedEvents(page, pageSize);
       console.log("Created events:", created);
 
       if (created?.events) {
-        setMyCreatedEvents(created.events);
+        setMyCreatedEvents((prev) => {
+          if (page === 0) return created.events;
+          // Append & deduplicate
+          const combined = [...prev, ...created.events];
+          return Array.from(
+            new Map(combined.map((e) => [e.eventId, e])).values(),
+          );
+        });
+        setCreatedTotalPages(created.totalPages || 0);
+        setCreatedTotalElements(created.totalElements || 0);
+        createdPageRef.current = page;
       }
       hasFetchedCreated.current = true;
     } catch (err) {
@@ -47,18 +67,42 @@ export default function MyEventsPage() {
     }
   };
 
-  const fetchRsvps = async () => {
+  const fetchRsvps = async (page) => {
     try {
-      setLoading(true);
-      const rsvps = await eventService.getMyRSVPs();
+      if (page === 0) setLoading(true);
+      const rsvps = await eventService.getMyRSVPs(page, pageSize);
       console.log("My RSVPs:", rsvps);
 
-      setMyRsvps(rsvps?.events || []);
+      if (rsvps?.events) {
+        setMyRsvps((prev) => {
+          if (page === 0) return rsvps.events;
+          // Append & deduplicate
+          const combined = [...prev, ...rsvps.events];
+          return Array.from(
+            new Map(combined.map((e) => [e.eventId, e])).values(),
+          );
+        });
+        setRsvpsTotalPages(rsvps.totalPages || 0);
+        setRsvpTotalElements(rsvps.totalElements || 0);
+        rsvpsPageRef.current = page;
+      }
       hasFetchedRsvps.current = true;
     } catch (err) {
       console.error("Error loading RSVPs:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Called by Swiper when user reaches the last slide
+  const handleReachEnd = () => {
+    console.log("created Total pg: "+createdTotalPages);
+    console.log("RSVPS Total pg: "+rsvpsTotalPages);
+
+    if (activeTab === "created" && createdPageRef.current + 1 < createdTotalPages) {
+      fetchCreatedEvents(createdPageRef.current + 1);
+    } else if (activeTab === "rsvps" && rsvpsPageRef.current + 1 < rsvpsTotalPages) {
+      fetchRsvps(rsvpsPageRef.current + 1);
     }
   };
 
@@ -87,14 +131,14 @@ export default function MyEventsPage() {
           className={`filter-button ${activeTab === "created" ? "active" : ""}`}
           onClick={() => setActiveTab("created")}
         >
-          🎨 Created Events ({myCreatedEvents.length})
+          🎨 Created Events ({createdTotalElements})
         </button>
 
         <button
           className={`filter-button ${activeTab === "rsvps" ? "active" : ""}`}
           onClick={() => setActiveTab("rsvps")}
         >
-          📨 My RSVPs ({myRsvps.length})
+          📨 My RSVPs ({rsvpTotalElements})
         </button>
       </div>
 
@@ -113,6 +157,7 @@ export default function MyEventsPage() {
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
           }}
+          onReachEnd={handleReachEnd}
           className="events-swiper"
         >
           {activeList.map((event) => (

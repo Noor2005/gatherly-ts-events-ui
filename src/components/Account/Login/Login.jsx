@@ -15,9 +15,6 @@ import OtpInput from "react-otp-input";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import authService from "../../Services/AuthService";
 import "./Login.css";
-import OpenArmsGirl from "./OpenArmsGirl.jsx";
-import VSignGirl from "./VSignGirl.jsx";
-import WavingGirl from "./WavingGirl.jsx";
 
 function Login() {
   const OTP_COUNTDOWN_SECONDS = 30;
@@ -187,11 +184,7 @@ function Login() {
       animate={{ opacity: 1, y: 0 }} // Animates to full opacity at its original position
       transition={{ duration: 0.5 }} // Animation takes 0.5 seconds
     >
-     <div className="characters-container">
-        <VSignGirl />
-        <OpenArmsGirl />
-        <WavingGirl />
-     </div>
+     
 
       <Container component="main" maxWidth="xs" className="login-form">
         <CssBaseline />
