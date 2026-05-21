@@ -30,9 +30,9 @@ const eventService = {
    * Fetches all events(PUBLIC - but sends auth token if available).
    * @returns {Promise<object>} The data from the API response.
    */
-  getAllEvents: async (page=0, size=6, type="UPCOMING",query) => {
+  getAllEvents: async (page = 0, size = 6, type = "UPCOMING", query) => {
     try {
-      console.log(type,page,size);
+      console.log(type, page, size);
       const response = await api.get(`/public/events/all?page=${page}&size=${size}&listType=${type}&searchQuery=${query}`);
       return response.data;
     } catch (error) {
@@ -88,9 +88,9 @@ const eventService = {
    * Get user's RSVPs.
    * @returns {Promise<object>} List of events the user has RSVP'd to
    */
-  getMyRSVPs: async () => {
+  getMyRSVPs: async (page = 0, size = 6) => {
     try {
-      const response = await api.get("/events/my-rsvps");
+      const response = await api.get(`/events/my-rsvps?page=${page}&size=${size}`);
       return response.data;
     } catch (error) {
       const message =
@@ -102,7 +102,7 @@ const eventService = {
     }
   },
 
-  getMyCreatedEvents: async (page=0, size=6) => {
+  getMyCreatedEvents: async (page = 0, size = 6) => {
     try {
       const response = await api.get(`/events/my-created?page=${page}&size=${size}`);
       return response.data;
@@ -134,14 +134,14 @@ const eventService = {
     } catch (error) {
       console.error("Error updating event:", error);
       const message =
-        error.response?.data?.message ||
+        error.response?.data?.message ||-
         error.message ||
         "Failed to update event";
       throw new Error(message);
     }
   },
 
-  
+
   deleteEvent: async (eventId) => {
     try {
       const res = await api.delete(`/events/delete?eventId=${eventId}`);
