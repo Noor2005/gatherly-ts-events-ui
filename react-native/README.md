@@ -104,16 +104,33 @@ TestFlight is Apple’s beta channel. You need an **Apple Developer Program** me
 - [App Store Connect](https://appstoreconnect.apple.com/) — create an app with bundle ID matching `app.json` → `ios.bundleIdentifier` (default: `com.techsisters.gatherly`)
 - [Expo account](https://expo.dev/signup) (free tier includes limited EAS builds)
 
-### 2. One-time setup
+### 2. One-time setup (required — fixes “EAS project not configured”)
+
+Run these from the **`react-native/`** folder (not the repo root):
 
 ```bash
 cd react-native
+npm install
 npm install -g eas-cli
 eas login
 eas init
 ```
 
-Link the project to Expo when prompted.
+`eas init` creates an EAS project and writes a `projectId` into `app.json` under `expo.extra.eas`. **Without this step, builds from expo.dev will fail.**
+
+Verify `app.json` contains something like:
+
+```json
+"extra": {
+  "eas": {
+    "projectId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  }
+}
+```
+
+Commit `app.json` after `eas init` so the Expo dashboard can find the linked project.
+
+**If you use the Expo website:** when connecting the GitHub repo, set the **project root** to `react-native` (not the monorepo root).
 
 Set your **production API URL** (not localhost) as an EAS secret:
 
