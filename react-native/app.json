@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Gatherly",
+    "slug": "gatherly",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "gatherly",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.techsisters.gatherly",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0f3363"
+      }
+    }
+  }
+}
