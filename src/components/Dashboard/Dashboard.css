@@ -161,7 +161,7 @@
 .events-swiper .swiper-button-next {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
+  border-radius: 30%;
   background: #fff;
   border: 1px solid #e0e0e0;
   box-shadow: none;
@@ -170,7 +170,7 @@
 
 .events-swiper .swiper-button-prev::after,
 .events-swiper .swiper-button-next::after {
-  font-size: 14px;
+  font-size: 10px;
   color: #333;
   font-weight: 600;
 }
