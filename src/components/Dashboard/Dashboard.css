@@ -11,7 +11,7 @@
 .dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 32px 20px 60px;
   min-height: 100vh;
 }
 
@@ -347,7 +347,8 @@
   display: flex;
   gap: 16px;
   align-items: stretch;
-  margin-bottom: 48px;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 /* Search Bar */
@@ -415,9 +416,18 @@
 @media (max-width: 768px) {
   .dashboard-search-toggle {
     flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .dashboard-search-wrapper {
+    order: 1;
+    width: 100%;
+    flex: none;
   }
 
   .dashboard-toggle-container {
+    order: 2;
     width: 100%;
     justify-content: space-between;
   }

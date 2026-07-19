@@ -145,20 +145,13 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-header">
+      {/* <div className="dashboard-header">
         <h2>{activeTab === "UPCOMING" ? "Upcoming Events" : "Past Events"}</h2>
         <p className="event-count">{totalElements} event(s)</p>
-      </div>
+      </div> */}
 
       {/* 🔍 Search + Toggle */}
-      <div
-        style={{
-          display: "flex",
-          gap: "16px",
-          alignItems: "stretch",
-          marginBottom: "48px",
-        }}
-      >
+      <div className="dashboard-search-toggle">
         {/* Search Bar */}
         <div className="dashboard-search-wrapper">
           {/* Leading icon: spinner while searching, magnifier otherwise */}

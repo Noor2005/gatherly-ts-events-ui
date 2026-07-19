@@ -440,7 +440,7 @@ function AddEventForm() {
         </div>
 
         {/* Tags */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="tags">Tags</label>
           <input
             type="text"
@@ -462,7 +462,7 @@ function AddEventForm() {
           {errors.tags && (
             <span className="error-message">{errors.tags.message}</span>
           )}
-        </div>
+        </div> */}
         
 
         <div className="form-actions form-group--full">
