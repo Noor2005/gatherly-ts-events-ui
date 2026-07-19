@@ -121,9 +121,9 @@ export default function MyEventsPage() {
 
   return (
     <div className="my-events-page">
-      <h2 className="section-title">
+      {/* <h2 className="section-title">
         {activeTab === "created" ? "My Created Events" : "My RSVPs"}
-      </h2>
+      </h2> */}
 
       {/* --- Toggle Buttons (same style as Dashboard) --- */}
       <div className="filter-controls">
@@ -131,14 +131,14 @@ export default function MyEventsPage() {
           className={`filter-button ${activeTab === "created" ? "active" : ""}`}
           onClick={() => setActiveTab("created")}
         >
-          🎨 Created Events ({createdTotalElements})
+          Created Events ({createdTotalElements})
         </button>
 
         <button
           className={`filter-button ${activeTab === "rsvps" ? "active" : ""}`}
           onClick={() => setActiveTab("rsvps")}
         >
-          📨 My RSVPs ({rsvpTotalElements})
+          My RSVPs ({rsvpTotalElements})
         </button>
       </div>
 

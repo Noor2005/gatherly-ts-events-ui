@@ -11,7 +11,7 @@
 .dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 32px 20px 60px;
   min-height: 100vh;
 }
 
@@ -161,7 +161,7 @@
 .events-swiper .swiper-button-next {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
+  border-radius: 30%;
   background: #fff;
   border: 1px solid #e0e0e0;
   box-shadow: none;
@@ -170,7 +170,7 @@
 
 .events-swiper .swiper-button-prev::after,
 .events-swiper .swiper-button-next::after {
-  font-size: 14px;
+  font-size: 10px;
   color: #333;
   font-weight: 600;
 }
@@ -347,7 +347,8 @@
   display: flex;
   gap: 16px;
   align-items: stretch;
-  margin-bottom: 48px;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 /* Search Bar */
@@ -358,7 +359,7 @@
 
 .dashboard-search-input {
   width: 100%;
-  height: 56px;
+  height: 50px;
   padding: 0 16px 0 48px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -380,9 +381,9 @@
 .dashboard-toggle-container {
   display: flex;
   background-color: #e5e7eb;
-  border-radius: 8px;
-  padding: 4px;
-  height: 56px;
+  border-radius: 15px;
+  padding: 0px;
+  height: 50px;
   align-items: center;
 }
 
@@ -390,7 +391,7 @@
   padding: 0 24px;
   height: 48px;
   border: none;
-  border-radius: 6px;
+  border-radius: 15px;
   cursor: pointer;
   font-weight: 500;
   font-size: 16px;
@@ -407,23 +408,33 @@
 }
 
 .dashboard-toggle-btn:hover {
-  background: var(--ts-secondary);
-  color: white;
+  background: #b0c8e6;
+  color: black;
 }
 
 /* Mobile responsive fixes */
 @media (max-width: 768px) {
   .dashboard-search-toggle {
     flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .dashboard-search-wrapper {
+    order: 1;
+    width: 100%;
+    flex: none;
   }
 
   .dashboard-toggle-container {
+    order: 2;
     width: 100%;
     justify-content: space-between;
   }
 
   .dashboard-toggle-btn {
     flex: 1;
+    min-width: 0;
   }
   
   /* Pagination Container */

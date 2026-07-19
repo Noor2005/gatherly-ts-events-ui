@@ -45,7 +45,7 @@ body {
               width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.sidebar:hover + .main-content {
+.sidebar:hover ~ .main-content {
   margin-left: var(--sidebar-width-expanded);
   width: calc(100% - var(--sidebar-width-expanded));
 }
@@ -244,7 +244,9 @@ button {
   }
 
   .main-content {
-    width: calc(100% - var(--sidebar-width-collapsed));
+    margin-left: 0;
+    width: 100%;
     padding-top: 0.5rem;
+    padding-bottom: 96px;
   }
 }

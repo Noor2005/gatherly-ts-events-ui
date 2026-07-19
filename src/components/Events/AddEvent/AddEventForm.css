@@ -99,6 +99,35 @@
   color: var(--ts-secondary);
 }
 
+.form-group input[type="file"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(73, 112, 165, 0.4);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ts-primary);
+  display: block;
+}
+
+.form-group input[type="file"]:focus {
+  outline: none;
+  border-color: rgba(73, 112, 165, 0.75);
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(194, 215, 237, 0.55);
+}
+
+.event-image-preview {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 320px;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(60, 80, 125, 0.16);
+  box-shadow: 0 8px 20px rgba(17, 34, 80, 0.08);
+}
+
 /* Form Actions - Buttons Container */
 .form-actions {
   display: flex;
@@ -248,7 +277,7 @@
   }
 
   .event-form--create .form-group--description {
-    grid-column: span 2;
+    grid-column: span 1;
   }
 
   .event-form--create .form-group--description textarea {
@@ -263,8 +292,8 @@
     padding: 28px 24px;
   }
 
-  .create-event-container h2 {
-    font-size: 1.8rem;
+  .create-event-container h3 {
+    font-size: 1.rem;
   }
 
   .event-form {
