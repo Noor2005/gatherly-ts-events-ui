@@ -21,7 +21,7 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState("UPCOMING"); // "upcoming" | "past"
 
   // Pagination state
-  const [pageSize] = useState(3); // fixed page size, no need to change
+  const [pageSize] = useState(3);
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
 

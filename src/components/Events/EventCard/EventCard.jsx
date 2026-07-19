@@ -121,27 +121,6 @@ function EventCard({ event }) {
         </div>
         
       </div>
-      {/* Event Description */}
-      <p className="event-description">
-        {event.shortDescription.length > 40 ? (
-          <>
-            {event.shortDescription.slice(0, 40)}...{" "}
-            <span
-              className="see-more-link"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleViewDetails(e);
-              }}
-            >
-              See more
-            </span>
-          </>
-        ) : (
-          event.shortDescription
-        )}
-      </p>
-      <div className="event-divider" />
-
       {/* Event Details */}
       <div className="event-details">
         <div className="detail-item">
@@ -188,7 +167,28 @@ function EventCard({ event }) {
         </div>
       )} */}
 
-    </div>
+    
+      {/* Event Description */}
+      <p className="event-description">
+        {event.shortDescription.length > 40 ? (
+          <>
+            {event.shortDescription.slice(0, 40)}...{" "}
+            <span
+              className="see-more-link"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleViewDetails(e);
+              }}
+            >
+              See more
+            </span>
+          </>
+        ) : (
+          event.shortDescription
+        )}
+      </p>
+      
+      </div>
   );
 }
 

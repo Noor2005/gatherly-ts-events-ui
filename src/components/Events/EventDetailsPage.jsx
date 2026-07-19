@@ -153,7 +153,7 @@ export default function EventDetailsPage() {
 
             
 
-            <div className="event-categories">
+            {/* <div className="event-categories">
               <span className="cat-label">Category:</span>
               {tags.map((t, i) => (
                 <span
@@ -165,7 +165,7 @@ export default function EventDetailsPage() {
                   {t}
                 </span>
               ))}
-            </div>
+            </div> */}
           </section>
         </main>
 
