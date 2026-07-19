@@ -14,6 +14,8 @@ function AddEventForm() {
   const location = useLocation();
   const [userTimezone, setUserTimezone] = useState(getUserTimezone());
   const [timezoneAbbr, setTimezoneAbbr] = useState("");
+  const [selectedImageName, setSelectedImageName] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
   const loggedInEmail = localStorage.getItem("email");
   const isEditMode = Boolean(eventId) || location.state?.event;
   const eventToEdit = location.state?.event;
@@ -41,6 +43,7 @@ function AddEventForm() {
       event_location: "",
       tags: "",
       duration: "",
+      event_image: "",
     },
   });
 
@@ -58,6 +61,29 @@ function AddEventForm() {
     setTimezoneAbbr(abbr);
     setValue("timezone", tz);
   }, [setValue]);
+
+  const handleImageSelection = (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      setSelectedImageName("");
+      setImagePreview("");
+      setValue("event_image", "", { shouldValidate: true });
+      return;
+    }
+
+    setSelectedImageName(file.name);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result;
+      setImagePreview(typeof result === "string" ? result : "");
+      setValue("event_image", typeof result === "string" ? result : "", {
+        shouldValidate: true,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Load event data if editing
   useEffect(() => {
@@ -85,6 +111,9 @@ function AddEventForm() {
               .toISOString()
               .slice(0, 16);
 
+            const existingImage =
+              eventData.imageUrl || eventData.image || eventData.coverImage || "";
+
             reset({
               title: eventData.title || "",
               short_description: eventData.shortDescription || "",
@@ -99,7 +128,11 @@ function AddEventForm() {
               event_host_email: eventData.eventHostEmail || "",
               tags: eventData.tags || "",
               duration: eventData.duration || "",
+              event_image: existingImage,
             });
+
+            setImagePreview(existingImage);
+            setSelectedImageName(existingImage ? "Existing event image" : "");
           }
         } catch (error) {
           console.error("Error loading event:", error);
@@ -143,6 +176,7 @@ function AddEventForm() {
         ...data,
         event_datetime: convertToISO8601(data.event_datetime),
         timezone: userTimezone,
+        imageUrl: data.event_image || "",
       };
 
       if (formattedData.event_type === "online") {
@@ -227,7 +261,7 @@ function AddEventForm() {
 
   return (
     <div className="create-event-container">
-      <h2>{isEditMode ? "Edit Event ✏️" : "Create New Event 🌸"}</h2>
+      <h3>{isEditMode ? "Edit Event " : "Create New Event "}</h3>
 
       {message.text && (
         <div className={`message ${message.type}`}>{message.text}</div>
@@ -358,19 +392,40 @@ function AddEventForm() {
           </div>
         )}
 
+        {/* Event Image */}
+        <div className="form-group">
+          <label htmlFor="event_image">Upload Event Image</label>
+          <input
+            type="file"
+            id="event_image"
+            accept="image/*"
+            onChange={handleImageSelection}
+          />
+          {selectedImageName && (
+            <small className="helper-text">Selected file: {selectedImageName}</small>
+          )}
+          {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Event preview"
+              className="event-image-preview"
+            />
+          )}
+        </div>
+
         {/* Description */}
         <div className="form-group form-group--full form-group--description">
           <label htmlFor="short_description">Description</label>
           <textarea
             id="short_description"
             rows={isEditMode ? 4 : 3}
-            placeholder="Share a short intro about your event (you can add more details after creating it)."
+            placeholder="Add a tiny sentence about your event."
             className={errors.short_description ? "error" : ""}
             {...register("short_description", {
               required: "Short description is required",
               maxLength: {
-                value: 200,
-                message: "Short description must not exceed 200 characters",
+                value: 100,
+                message: "Short description must not exceed 100 characters",
               },
             })}
           />
@@ -493,7 +548,7 @@ function AddEventForm() {
                 : "Creating Event..."
               : isEditMode
               ? "Update Event"
-              : "Create Event 🎉"}
+              : "Add"}
           </button>
         </div>
       </form>

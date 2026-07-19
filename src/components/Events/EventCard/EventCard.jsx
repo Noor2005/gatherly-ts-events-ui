@@ -16,7 +16,7 @@ function EventCard({ event }) {
   const userTimezone = getTimezoneAbbreviation(getUserTimezone());
   const tags = event.tags ? event.tags.split(",").map((tag) => tag.trim()) : [];
 
-  const defaultEventImage = "/eventcard2.jpg";
+  const defaultEventImage = "/eventcard.jpg";
   const eventImageSrc = event.imageUrl || event.image || event.coverImage || defaultEventImage;
 
   const CHARACTER_LIMIT = 100; // Adjust based on your design
